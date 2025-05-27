@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { useToast } from '@/hooks/use-toast';
 import { Plus, Minus, ShoppingCart, MessageCircle } from 'lucide-react';
@@ -23,37 +22,16 @@ const Index = () => {
   const menuItems: MenuItem[] = [
     {
       id: '1',
-      name: 'Chicken Biryani',
-      description: 'Aromatic basmati rice with tender chicken',
-      price: 320,
+      name: 'Veg Biryani',
+      description: 'Aromatic basmati rice with mixed vegetables',
+      price: 60,
       image: '🍛'
     },
     {
       id: '2',
-      name: 'Mutton Biryani',
-      description: 'Premium mutton with fragrant rice',
-      price: 450,
-      image: '🍛'
-    },
-    {
-      id: '3',
-      name: 'Vegetable Biryani',
-      description: 'Mixed vegetables with aromatic rice',
-      price: 250,
-      image: '🍛'
-    },
-    {
-      id: '4',
-      name: 'Prawns Biryani',
-      description: 'Fresh prawns with premium basmati',
-      price: 380,
-      image: '🍛'
-    },
-    {
-      id: '5',
-      name: 'Egg Biryani',
-      description: 'Boiled eggs with spiced rice',
-      price: 200,
+      name: 'Chaap Biryani',
+      description: 'Delicious soya chaap with fragrant rice',
+      price: 80,
       image: '🍛'
     }
   ];
