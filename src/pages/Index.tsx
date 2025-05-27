@@ -1,12 +1,16 @@
 
 import React, { useState } from 'react';
 import { useToast } from '@/hooks/use-toast';
-import Header from '@/components/Header';
-import Hero from '@/components/Hero';
-import OfferBanner from '@/components/OfferBanner';
-import RestaurantCard from '@/components/RestaurantCard';
-import MenuCard, { MenuItem } from '@/components/MenuCard';
-import Cart from '@/components/Cart';
+import { Plus, Minus, ShoppingCart, MessageCircle } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+
+interface MenuItem {
+  id: string;
+  name: string;
+  price: number;
+  image: string;
+  description: string;
+}
 
 interface CartItem extends MenuItem {
   quantity: number;
@@ -15,134 +19,42 @@ interface CartItem extends MenuItem {
 const Index = () => {
   const { toast } = useToast();
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
-  const [isCartOpen, setIsCartOpen] = useState(false);
-  const [selectedRestaurant, setSelectedRestaurant] = useState<string | null>(null);
-  const [appliedCoupon, setAppliedCoupon] = useState<string>('');
-  const [discount, setDiscount] = useState(0);
-
-  const offers = [
-    {
-      id: '1',
-      title: 'First Order Special',
-      description: 'Get 30% off on your first biryani order',
-      discount: '30% OFF',
-      code: 'FIRST30',
-      validUntil: 'Dec 31',
-      minOrder: 200
-    },
-    {
-      id: '2',
-      title: 'Weekend Feast',
-      description: 'Free delivery + 20% off on weekend orders',
-      discount: '20% OFF',
-      code: 'WEEKEND20',
-      validUntil: 'This Weekend',
-      minOrder: 300
-    },
-    {
-      id: '3',
-      title: 'Family Pack',
-      description: 'Order for 4+ people and save big',
-      discount: '25% OFF',
-      code: 'FAMILY25',
-      validUntil: 'Dec 25',
-      minOrder: 800
-    }
-  ];
-
-  const restaurants = [
-    {
-      id: '1',
-      name: 'Hyderabadi House',
-      rating: 4.8,
-      deliveryTime: '25-30 min',
-      distance: '1.2 km',
-      cuisine: 'Hyderabadi, North Indian',
-      image: '',
-      speciality: 'Authentic Hyderabadi Biryani'
-    },
-    {
-      id: '2',
-      name: 'Biryani Palace',
-      rating: 4.6,
-      deliveryTime: '30-35 min',
-      distance: '2.1 km',
-      cuisine: 'Mughlai, Biryani',
-      image: '',
-      speciality: 'Royal Mughlai Biryani'
-    },
-    {
-      id: '3',
-      name: 'Kolkata Biryani Corner',
-      rating: 4.7,
-      deliveryTime: '20-25 min',
-      distance: '0.8 km',
-      cuisine: 'Bengali, Biryani',
-      image: '',
-      speciality: 'Traditional Kolkata Biryani'
-    }
-  ];
 
   const menuItems: MenuItem[] = [
     {
       id: '1',
       name: 'Chicken Biryani',
-      description: 'Aromatic basmati rice cooked with tender chicken pieces and authentic spices',
+      description: 'Aromatic basmati rice with tender chicken',
       price: 320,
-      image: '',
-      category: 'Non-Veg Biryani',
-      spiceLevel: 'Medium',
-      isVeg: false
+      image: '🍛'
     },
     {
       id: '2',
       name: 'Mutton Biryani',
-      description: 'Premium mutton pieces slow-cooked with fragrant rice and traditional masalas',
+      description: 'Premium mutton with fragrant rice',
       price: 450,
-      image: '',
-      category: 'Non-Veg Biryani',
-      spiceLevel: 'Spicy',
-      isVeg: false
+      image: '🍛'
     },
     {
       id: '3',
       name: 'Vegetable Biryani',
-      description: 'Mixed vegetables and paneer cooked with aromatic rice and mild spices',
+      description: 'Mixed vegetables with aromatic rice',
       price: 250,
-      image: '',
-      category: 'Veg Biryani',
-      spiceLevel: 'Mild',
-      isVeg: true
+      image: '🍛'
     },
     {
       id: '4',
       name: 'Prawns Biryani',
-      description: 'Fresh prawns marinated and cooked with premium basmati rice',
+      description: 'Fresh prawns with premium basmati',
       price: 380,
-      image: '',
-      category: 'Seafood Biryani',
-      spiceLevel: 'Medium',
-      isVeg: false
+      image: '🍛'
     },
     {
       id: '5',
       name: 'Egg Biryani',
-      description: 'Boiled eggs cooked with spiced rice and caramelized onions',
+      description: 'Boiled eggs with spiced rice',
       price: 200,
-      image: '',
-      category: 'Egg Biryani',
-      spiceLevel: 'Mild',
-      isVeg: false
-    },
-    {
-      id: '6',
-      name: 'Paneer Biryani',
-      description: 'Cottage cheese cubes cooked with aromatic rice and mild spices',
-      price: 280,
-      image: '',
-      category: 'Veg Biryani',
-      spiceLevel: 'Mild',
-      isVeg: true
+      image: '🍛'
     }
   ];
 
@@ -161,7 +73,7 @@ const Index = () => {
     });
     toast({
       title: "Added to cart",
-      description: `${item.name} has been added to your cart`,
+      description: `${item.name} added successfully`,
     });
   };
 
@@ -180,131 +92,112 @@ const Index = () => {
     });
   };
 
-  const handleUpdateCartQuantity = (itemId: string, quantity: number) => {
-    if (quantity <= 0) {
-      setCartItems(prev => prev.filter(item => item.id !== itemId));
-    } else {
-      setCartItems(prev =>
-        prev.map(item =>
-          item.id === itemId ? { ...item, quantity } : item
-        )
-      );
-    }
-  };
-
-  const handleRemoveCartItem = (itemId: string) => {
-    setCartItems(prev => prev.filter(item => item.id !== itemId));
-  };
-
-  const handleApplyCoupon = (code: string) => {
-    const offer = offers.find(o => o.code === code);
-    if (offer) {
-      const subtotal = cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-      if (offer.minOrder && subtotal < offer.minOrder) {
-        toast({
-          title: "Minimum order not met",
-          description: `Minimum order of ₹${offer.minOrder} required for this coupon`,
-          variant: "destructive",
-        });
-        return;
-      }
-      
-      setAppliedCoupon(code);
-      setDiscount(parseInt(offer.discount.replace('% OFF', '')));
-      toast({
-        title: "Coupon applied!",
-        description: `${offer.discount} discount applied to your order`,
-      });
-    } else {
-      toast({
-        title: "Invalid coupon",
-        description: "The coupon code you entered is not valid",
-        variant: "destructive",
-      });
-    }
-  };
-
-  const handleViewMenu = (restaurantId: string) => {
-    setSelectedRestaurant(restaurantId);
-  };
-
   const getItemQuantity = (itemId: string) => {
     const item = cartItems.find(cartItem => cartItem.id === itemId);
     return item ? item.quantity : 0;
   };
 
-  const totalCartItems = cartItems.reduce((sum, item) => sum + item.quantity, 0);
+  const totalAmount = cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+  const totalItems = cartItems.reduce((sum, item) => sum + item.quantity, 0);
+
+  const handleWhatsAppOrder = () => {
+    if (cartItems.length === 0) {
+      toast({
+        title: "Cart is empty",
+        description: "Please add items to your cart first",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    const orderDetails = cartItems.map(item => 
+      `${item.name} x${item.quantity} - ₹${item.price * item.quantity}`
+    ).join('\n');
+    
+    const message = `🍛 *New Biryani Order*\n\n${orderDetails}\n\n*Total: ₹${totalAmount}*\n\nPlease confirm the order and share payment details.`;
+    
+    const whatsappUrl = `https://wa.me/919876543210?text=${encodeURIComponent(message)}`;
+    window.open(whatsappUrl, '_blank');
+  };
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <Header 
-        cartItems={totalCartItems}
-        onCartClick={() => setIsCartOpen(true)}
-        onOffersClick={() => {
-          const offersSection = document.getElementById('offers');
-          offersSection?.scrollIntoView({ behavior: 'smooth' });
-        }}
-      />
-      
-      <Hero />
-      
-      <div id="offers">
-        <OfferBanner offers={offers} onApplyCoupon={handleApplyCoupon} />
+      {/* Header */}
+      <header className="bg-biryani-600 text-white p-4 sticky top-0 z-10">
+        <div className="flex items-center justify-between">
+          <h1 className="text-xl font-bold">BiryaniExpress</h1>
+          <div className="flex items-center space-x-2">
+            <ShoppingCart className="h-5 w-5" />
+            <span className="font-medium">{totalItems}</span>
+          </div>
+        </div>
+      </header>
+
+      {/* Menu Items */}
+      <div className="p-4 space-y-4">
+        <h2 className="text-lg font-bold text-gray-800 mb-4">Order Fresh Biryani</h2>
+        
+        {menuItems.map((item) => (
+          <div key={item.id} className="bg-white rounded-lg shadow-md p-4">
+            <div className="flex items-center space-x-4">
+              <div className="text-4xl">{item.image}</div>
+              <div className="flex-1">
+                <h3 className="font-semibold text-gray-800">{item.name}</h3>
+                <p className="text-sm text-gray-600 mb-2">{item.description}</p>
+                <p className="text-lg font-bold text-biryani-600">₹{item.price}</p>
+              </div>
+              <div className="flex items-center space-x-2">
+                {getItemQuantity(item.id) > 0 ? (
+                  <>
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      onClick={() => handleRemoveFromCart(item.id)}
+                      className="h-8 w-8 p-0"
+                    >
+                      <Minus className="h-4 w-4" />
+                    </Button>
+                    <span className="font-medium w-8 text-center">{getItemQuantity(item.id)}</span>
+                    <Button
+                      size="sm"
+                      onClick={() => handleAddToCart(item)}
+                      className="h-8 w-8 p-0 bg-biryani-500 hover:bg-biryani-600"
+                    >
+                      <Plus className="h-4 w-4" />
+                    </Button>
+                  </>
+                ) : (
+                  <Button
+                    onClick={() => handleAddToCart(item)}
+                    className="bg-biryani-500 hover:bg-biryani-600 text-white"
+                  >
+                    Add
+                  </Button>
+                )}
+              </div>
+            </div>
+          </div>
+        ))}
       </div>
-      
-      {!selectedRestaurant ? (
-        <section className="py-12">
-          <div className="container mx-auto px-4">
-            <h2 className="text-3xl font-bold text-center text-gray-800 mb-8">
-              Restaurants Near You
-            </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {restaurants.map((restaurant) => (
-                <RestaurantCard
-                  key={restaurant.id}
-                  restaurant={restaurant}
-                  onViewMenu={handleViewMenu}
-                />
-              ))}
+
+      {/* Cart Summary & Order Button */}
+      {totalItems > 0 && (
+        <div className="fixed bottom-0 left-0 right-0 bg-white border-t p-4 shadow-lg">
+          <div className="flex items-center justify-between mb-3">
+            <div>
+              <p className="text-sm text-gray-600">{totalItems} items</p>
+              <p className="text-lg font-bold text-gray-800">Total: ₹{totalAmount}</p>
             </div>
           </div>
-        </section>
-      ) : (
-        <section className="py-12">
-          <div className="container mx-auto px-4">
-            <div className="flex items-center justify-between mb-8">
-              <h2 className="text-3xl font-bold text-gray-800">Menu</h2>
-              <button
-                onClick={() => setSelectedRestaurant(null)}
-                className="text-biryani-600 hover:text-biryani-700 font-medium"
-              >
-                ← Back to Restaurants
-              </button>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {menuItems.map((item) => (
-                <MenuCard
-                  key={item.id}
-                  item={item}
-                  quantity={getItemQuantity(item.id)}
-                  onAddToCart={handleAddToCart}
-                  onRemoveFromCart={handleRemoveFromCart}
-                />
-              ))}
-            </div>
-          </div>
-        </section>
+          <Button
+            onClick={handleWhatsAppOrder}
+            className="w-full bg-green-500 hover:bg-green-600 text-white py-3 text-lg"
+          >
+            <MessageCircle className="h-5 w-5 mr-2" />
+            Order via WhatsApp
+          </Button>
+        </div>
       )}
-      
-      <Cart
-        isOpen={isCartOpen}
-        onClose={() => setIsCartOpen(false)}
-        items={cartItems}
-        onUpdateQuantity={handleUpdateCartQuantity}
-        onRemoveItem={handleRemoveCartItem}
-        appliedCoupon={appliedCoupon}
-        discount={discount}
-      />
     </div>
   );
 };
