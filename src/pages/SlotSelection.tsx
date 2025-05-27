@@ -1,8 +1,7 @@
-
 import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useToast } from '@/hooks/use-toast';
-import { ArrowLeft, Clock, User, Phone, MessageCircle } from 'lucide-react';
+import { ArrowLeft, Clock, User, Phone, MessageCircle, QrCode } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 
@@ -33,8 +32,9 @@ const SlotSelection = () => {
     phone: ''
   });
   const [draggedSlot, setDraggedSlot] = useState('');
+  const [showQR, setShowQR] = useState(false);
 
-  const timeSlots = ['10:00 AM', '11:00 AM', '12:00 PM', '1:00 PM', '2:00 PM', '3:00 PM'];
+  const timeSlots = ['10:00 AM', '11:00 AM', '12:00 PM'];
 
   const handleDragStart = (e: React.DragEvent, slot: string) => {
     setDraggedSlot(slot);
@@ -100,8 +100,12 @@ const SlotSelection = () => {
     
     const message = `🍛 *New Biryani Order*\n\n*Customer Details:*\nName: ${userDetails.name}\nPhone: ${userDetails.phone}\nTime Slot: ${selectedSlot}\n\n*Order:*\n${orderDetails}${giftMessage}\n\n*Total: ₹${totalAmount}*\n\nPlease confirm the order and share payment details.`;
     
-    const whatsappUrl = `https://wa.me/919876543210?text=${encodeURIComponent(message)}`;
+    const whatsappUrl = `https://wa.me/918650061810?text=${encodeURIComponent(message)}`;
     window.open(whatsappUrl, '_blank');
+  };
+
+  const generateQRCode = () => {
+    setShowQR(true);
   };
 
   if (!cartItems) {
@@ -113,18 +117,49 @@ const SlotSelection = () => {
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
       <header className="bg-biryani-600 text-white p-4 sticky top-0 z-10">
-        <div className="flex items-center space-x-3">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center space-x-3">
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => navigate('/')}
+              className="text-white hover:bg-biryani-700 p-2"
+            >
+              <ArrowLeft className="h-5 w-5" />
+            </Button>
+            <h1 className="text-xl font-bold">Complete Your Order</h1>
+          </div>
           <Button
             variant="ghost"
             size="sm"
-            onClick={() => navigate('/')}
-            className="text-white hover:bg-biryani-700 p-2"
+            onClick={generateQRCode}
+            className="text-white hover:bg-biryani-700"
           >
-            <ArrowLeft className="h-5 w-5" />
+            <QrCode className="h-5 w-5" />
           </Button>
-          <h1 className="text-xl font-bold">Complete Your Order</h1>
         </div>
       </header>
+
+      {/* QR Code Modal */}
+      {showQR && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" onClick={() => setShowQR(false)}>
+          <div className="bg-white p-6 rounded-lg max-w-sm w-full mx-4" onClick={(e) => e.stopPropagation()}>
+            <h3 className="text-lg font-bold mb-4 text-center">Download APK</h3>
+            <div className="flex justify-center mb-4">
+              <div className="w-48 h-48 bg-gray-200 border-2 border-dashed border-gray-400 flex items-center justify-center text-center">
+                <div>
+                  <QrCode className="h-12 w-12 mx-auto mb-2 text-gray-600" />
+                  <p className="text-sm text-gray-600">QR Code for APK Download</p>
+                  <p className="text-xs text-gray-500 mt-2">Point your camera here to download the APK</p>
+                </div>
+              </div>
+            </div>
+            <Button onClick={() => setShowQR(false)} className="w-full">
+              Close
+            </Button>
+          </div>
+        </div>
+      )}
 
       <div className="p-4 space-y-6">
         {/* Order Summary */}
@@ -154,7 +189,7 @@ const SlotSelection = () => {
             <Clock className="h-5 w-5 mr-2" />
             Select Delivery Time
           </h3>
-          <div className="grid grid-cols-2 gap-3 mb-4">
+          <div className="grid grid-cols-1 gap-3 mb-4">
             {timeSlots.map((slot) => (
               <div
                 key={slot}

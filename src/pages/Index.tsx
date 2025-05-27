@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useToast } from '@/hooks/use-toast';
@@ -80,8 +81,8 @@ const Index = () => {
   const totalAmount = cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
   const totalItems = cartItems.reduce((sum, item) => sum + item.quantity, 0);
   
-  // Coupon system - free gift when quantity is above 4
-  const couponApplied = totalItems > 4;
+  // Coupon system - free gift when quantity is above 3
+  const couponApplied = totalItems > 3;
 
   const handleNext = () => {
     if (cartItems.length === 0) {
@@ -179,7 +180,7 @@ const Index = () => {
             <div className="flex items-center space-x-2 text-yellow-800">
               <Gift className="h-4 w-4" />
               <span className="text-sm font-medium">
-                Order {5 - totalItems} more items to get a free gift! 🎁
+                Order {4 - totalItems} more items to get a free gift! 🎁
               </span>
             </div>
           </div>
