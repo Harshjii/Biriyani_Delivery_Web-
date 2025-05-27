@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useToast } from '@/hooks/use-toast';
-import { Plus, Minus, ShoppingCart, MessageCircle } from 'lucide-react';
+import { Plus, Minus, ShoppingCart, ArrowRight, Gift } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 interface MenuItem {
@@ -16,6 +17,7 @@ interface CartItem extends MenuItem {
 }
 
 const Index = () => {
+  const navigate = useNavigate();
   const { toast } = useToast();
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
 
@@ -77,8 +79,11 @@ const Index = () => {
 
   const totalAmount = cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
   const totalItems = cartItems.reduce((sum, item) => sum + item.quantity, 0);
+  
+  // Coupon system - free gift when quantity is above 4
+  const couponApplied = totalItems > 4;
 
-  const handleWhatsAppOrder = () => {
+  const handleNext = () => {
     if (cartItems.length === 0) {
       toast({
         title: "Cart is empty",
@@ -88,14 +93,14 @@ const Index = () => {
       return;
     }
 
-    const orderDetails = cartItems.map(item => 
-      `${item.name} x${item.quantity} - ₹${item.price * item.quantity}`
-    ).join('\n');
-    
-    const message = `🍛 *New Biryani Order*\n\n${orderDetails}\n\n*Total: ₹${totalAmount}*\n\nPlease confirm the order and share payment details.`;
-    
-    const whatsappUrl = `https://wa.me/919876543210?text=${encodeURIComponent(message)}`;
-    window.open(whatsappUrl, '_blank');
+    navigate('/slot-selection', {
+      state: {
+        cartItems,
+        totalAmount,
+        totalItems,
+        couponApplied
+      }
+    });
   };
 
   return (
@@ -110,6 +115,17 @@ const Index = () => {
           </div>
         </div>
       </header>
+
+      {/* Coupon Banner */}
+      {couponApplied && (
+        <div className="bg-gradient-to-r from-green-500 to-green-600 text-white p-3 mx-4 mt-4 rounded-lg shadow-md animate-pulse">
+          <div className="flex items-center justify-center space-x-2">
+            <Gift className="h-5 w-5" />
+            <span className="font-bold">🎉 Congratulations! Free Gift Unlocked!</span>
+          </div>
+          <p className="text-center text-sm mt-1">You get a complimentary dessert with your order!</p>
+        </div>
+      )}
 
       {/* Menu Items */}
       <div className="p-4 space-y-4">
@@ -156,23 +172,37 @@ const Index = () => {
             </div>
           </div>
         ))}
+
+        {/* Coupon Info */}
+        {!couponApplied && totalItems > 0 && (
+          <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-3 mt-4">
+            <div className="flex items-center space-x-2 text-yellow-800">
+              <Gift className="h-4 w-4" />
+              <span className="text-sm font-medium">
+                Order {5 - totalItems} more items to get a free gift! 🎁
+              </span>
+            </div>
+          </div>
+        )}
       </div>
 
-      {/* Cart Summary & Order Button */}
+      {/* Cart Summary & Next Button */}
       {totalItems > 0 && (
         <div className="fixed bottom-0 left-0 right-0 bg-white border-t p-4 shadow-lg">
           <div className="flex items-center justify-between mb-3">
             <div>
               <p className="text-sm text-gray-600">{totalItems} items</p>
               <p className="text-lg font-bold text-gray-800">Total: ₹{totalAmount}</p>
+              {couponApplied && (
+                <p className="text-sm text-green-600 font-medium">+ Free Gift 🎁</p>
+              )}
             </div>
           </div>
           <Button
-            onClick={handleWhatsAppOrder}
-            className="w-full bg-green-500 hover:bg-green-600 text-white py-3 text-lg"
+            onClick={handleNext}
+            className="w-full bg-biryani-500 hover:bg-biryani-600 text-white py-3 text-lg"
           >
-            <MessageCircle className="h-5 w-5 mr-2" />
-            Order via WhatsApp
+            Next <ArrowRight className="h-5 w-5 ml-2" />
           </Button>
         </div>
       )}
