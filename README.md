@@ -1,73 +1,30 @@
-# Welcome to My my project
+# 🍽️ Welcome to My Biryani Delivery Project
 
-## Project info
+## 🚀 Project Info
 
-**URL**: https://lovable.dev/projects/92dd0ad0-9a4c-4ac4-b2bd-25a04cfba442
+**Live URL**: [Click here to view the live site](https://lovable.dev/projects/92dd0ad0-9a4c-4ac4-b2bd-25a04cfba442)
 
-## How can I edit this code?
+This is a modern, fast, and beautifully designed Biryani delivery web application built to provide users with a smooth ordering experience.
 
-There are several ways of editing your application.
+---
 
-**Use Lovable**
+## ✏️ How Can I Edit This Code?
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/92dd0ad0-9a4c-4ac4-b2bd-25a04cfba442) and start prompting.
+You have a few different ways to edit and work on this project:
 
-Changes made via Lovable will be committed automatically to this repo.
+### ✅ Use Your Preferred Code Editor (e.g., VS Code)
 
-**Use your preferred IDE**
-
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
+You can work on this project locally using any IDE. Just follow these steps:
 
 ```sh
-# Step 1: Clone the repository using the project's Git URL.
+# Step 1: Clone the repository
 git clone <YOUR_GIT_URL>
 
-# Step 2: Navigate to the project directory.
+# Step 2: Go to the project folder
 cd <YOUR_PROJECT_NAME>
 
-# Step 3: Install the necessary dependencies.
-npm i
+# Step 3: Install the project dependencies
+npm install
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
+# Step 4: Start the development server
 npm run dev
-```
-
-**Edit a file directly in GitHub**
-
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
-
-**Use GitHub Codespaces**
-
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
-
-## What technologies are used for this project?
-
-This project is built with:
-
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/92dd0ad0-9a4c-4ac4-b2bd-25a04cfba442) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
