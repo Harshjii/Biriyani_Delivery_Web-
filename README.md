@@ -1,8 +1,6 @@
 <h2>🖼️ UI Preview</h2>
 
-<p align="center">
-  (https://github.com/Harshjii/Biriyani_Delivery_Web-/blob/963d818f876566c71cbf1c82f6bd5120e0618d85/Screenshot%202025-05-31%20113741.png)
-</p>
+![Biriyani UI]()
 
 
 # 🍽️ Welcome to My Biryani Delivery Project
