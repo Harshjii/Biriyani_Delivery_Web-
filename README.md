@@ -1,3 +1,10 @@
+<h2>🖼️ UI Preview</h2>
+
+<p align="center">
+  <img src="file:///C:/Users/150ax/Pictures/Screenshots/Screenshot%202025-05-31%20113741.png" width="800" alt="BiriyaniExpress UI"/>
+</p>
+
+
 # 🍽️ Welcome to My Biryani Delivery Project
 
 ## 🚀 Project Info
