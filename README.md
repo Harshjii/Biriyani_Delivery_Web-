@@ -1,7 +1,7 @@
 <h2>🖼️ UI Preview</h2>
 
 <p align="center">
-  <img src="file:///C:/Users/150ax/Pictures/Screenshots/Screenshot%202025-05-31%20113741.png" width="800" alt="BiriyaniExpress UI"/>
+  ![image alt](https://github.com/Harshjii/Biriyani_Delivery_Web-/blob/963d818f876566c71cbf1c82f6bd5120e0618d85/Screenshot%202025-05-31%20113741.png)
 </p>
 
 
