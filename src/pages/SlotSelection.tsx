@@ -45,7 +45,7 @@ const SlotSelection = () => {
 
   useEffect(() => {
     const complete = selectedSlot && userDetails.name && userDetails.phone;
-    setIsFormComplete(complete);
+    setIsFormComplete(Boolean(complete));
   }, [selectedSlot, userDetails.name, userDetails.phone]);
 
   // Celebration animation when form is complete
