@@ -143,7 +143,7 @@ const SlotSelection = () => {
     
     const message = `🍛 *New Biryani Order*\n\n*Customer Details:*\nName: ${userDetails.name}\nPhone: ${userDetails.phone}\nTime Slot: ${selectedSlot}\n\n*Order:*\n${orderDetails}${giftMessage}\n\n*Total: ₹${totalAmount}*\n\nPlease confirm the order and share payment details.`;
     
-    const whatsappUrl = `https://wa.me/917454958772?text=${encodeURIComponent(message)}`;
+    const whatsappUrl = `https://wa.me/919027723883?text=${encodeURIComponent(message)}`;
     window.open(whatsappUrl, '_blank');
 
     toast({
