@@ -2,6 +2,11 @@
 
 ![BiriyaniExpress UI](https://github.com/Harshjii/Biriyani_Delivery_Web-/blob/2597230fa43b5b73c392df795c4783eafe63f576/Screenshot%202025-05-31%20113741.png)
 
+  <div>
+  <!-- Next.js -->
+<img alt="Static Badge" src="https://img.shields.io/badge/Next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white" />    
+  </div>
+
 
 # 🍽️ Welcome to My Biryani Delivery Project
 
