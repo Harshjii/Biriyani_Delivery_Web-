@@ -40,7 +40,8 @@ const SlotSelection = () => {
   const timeSlots = [
     { time: '10:00 AM', label: 'Early Bird', icon: '🌅', popular: false },
     { time: '11:00 AM', label: 'Peak Time', icon: '⚡', popular: true },
-    { time: '12:00 PM', label: 'Lunch Rush', icon: '🍽️', popular: false }
+    { time: '12:00 PM', label: 'Lunch Rush', icon: '🍽️', popular: false },
+    { time: '1:00 PM', label: 'Afternoon', icon: '☀️', popular: false }
   ];
 
   useEffect(() => {
