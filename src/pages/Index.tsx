@@ -29,7 +29,7 @@ const Index = () => {
   const menuItems: MenuItem[] = [
     {
       id: '1',
-      name: 'Veg Biryani',
+      name: 'Veg Biryanis',
       description: 'Aromatic basmati rice with mixed vegetables',
       price: 60,
       image: '🍛',
